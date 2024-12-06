@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h1>Edit File: {{ filename }}</h1>
+    <textarea id="editor" rows="20" cols="100">{{ content }}</textarea>
+    <button onclick="saveFile()">Save</button>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script>
+        const socket = io();
+        function saveFile() {
+            const content = document.getElementById('editor').value;
+            socket.emit('save_file', { filename: "{{ filename }}", content: content });
+        }
+        socket.on('save_status', (data) => alert(data.message));
+    </script>
+</body>
+</html>
